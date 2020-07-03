@@ -4,7 +4,7 @@ session_start();
 echo json_encode($_SESSION);
 if(isset($_SESSION["idUser"])){
     echo '<script>window.location.href = "http://localhost/proyecto/pages/index.php";</script>';
-}
+}else{
 ?>
 <div class="sidenav">
     <div class="login-main-text">
@@ -113,5 +113,6 @@ body {
 </style>
 <script src="../assets/js/login.js"></script>
 <?php
+}
 include "../includes/footer.php";
 ?>
