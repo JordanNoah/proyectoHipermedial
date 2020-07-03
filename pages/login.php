@@ -1,6 +1,8 @@
 <?php
 include "../includes/header.php";
-if(isset($_SESSION)){
+session_start();
+echo json_encode($_SESSION);
+if(isset($_SESSION["idUser"])){
     echo '<script>window.location.href = "http://localhost/proyecto/pages/index.php";</script>';
 }
 ?>
@@ -10,7 +12,7 @@ if(isset($_SESSION)){
         <p>Logeate para obtener acceso.</p>
     </div>
     <div class="end-position">
-        <button class="btn btn-light login">Create account</button>
+        <button class="btn btn-light createAcc">Create account</button>
     </div>
 </div>
 <div class="main">
@@ -28,6 +30,7 @@ if(isset($_SESSION)){
         </div>
     </div>
 </div>
+<script src="../assets/js/login.js"></script>
 <style>
 body {
     font-family: "Lato", sans-serif;
@@ -108,25 +111,7 @@ body {
     color: #fff;
 }
 </style>
-<script>
-$(".login").click(function(){
-    var userNamer = $(".userName").val();
-    var password = $(".password").val();
-    $.ajax({
-        type:"post",
-        url:"http://localhost/proyectHipermedial/scripts/login.php",
-        data:{
-            'userNamer':userNamer,
-            'password':password
-        },
-        success:function(res){
-            if(res=="1"){window.location.assign("http://localhost/proyectHipermedial/pages/index.php");}
-            if(res=="0"){alert("Contraseña Erronea");}
-            if(res=="2"){alert("Usuario Erroneo");}
-        }
-    });
-});
-</script>
+<script src="../assets/js/login.js"></script>
 <?php
 include "../includes/footer.php";
 ?>
