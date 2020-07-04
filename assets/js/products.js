@@ -1,4 +1,49 @@
-$(document).ready(function(){  
+$(document).ready(function(){
+    callproducts();
+    function callproducts(){
+        $(".listProducts").empty();
+        $.ajax({
+            type:"get",
+            url:"http://localhost/proyecto/scripts/productosGet.php",
+            success:function(res){
+                var products = JSON.parse(res);
+                products.forEach(element => {
+                    var image = new Image();                
+                    image.src = element["image"]
+                    $(".listProducts").append(
+                        "<div class='col-4'>"+
+                            "<div style='position:absolute;right:0px;' class='pr-5 pt-4'>"+
+                            "<div class='removeProduct' id='"+element["idproducts"]+"'><i style='color:red;' class='fas fa-trash'></i></div></div>"+
+                            "<img class='imgproducts' src='"+element["image"]+"' />"+
+                            "<div class='d-flex justify-content-center'>"+
+                                "<h5>"+element["nombre"]+"</h5>"+
+                            "</div>"+
+                            "<div class='d-flex justify-content-center'>"+
+                                "<h6>"+element["descripcion"]+"</h6>"+
+                            "</div>"+
+                        "</div>"
+                    );
+                });
+            }
+        });
+    }
+
+    $(document).on("click",".removeProduct",function(){
+        var idProduct = $(this).attr("id");
+        $.ajax({
+            type:"post",
+            url:"http://localhost/proyecto/scripts/removeProduct.php",
+            data:{
+                "idProduct":idProduct
+            },
+            success:function(res){
+                if (res==1) {
+                    callproducts();
+                }
+            }
+        });
+    });
+
     $(".newProduct").click(function(){
         Swal.fire({
             title: "<i>Añadir producto</i>", 
@@ -16,7 +61,7 @@ $(document).ready(function(){
             cancelButtonText: "Cerrar",
             confirmButtonText: "Confirmar", 
         }).then(async function(confirm){
-            if(confirm){
+            if(confirm["isConfirmed"]){
                 var nombre = $(".nombreProduct").val();
                 var descripcion = $(".descripcionProduct").val();
                 var myFile = $('#file').prop('files')[0];
@@ -30,7 +75,16 @@ $(document).ready(function(){
                         'image':imageBase64
                     },
                     success:function(res){
-                        console.log(res);
+                        if (res==1) {
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Tu producto fue guardado',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                            callproducts();
+                        }
                     }
                 });
             }
