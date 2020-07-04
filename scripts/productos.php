@@ -5,10 +5,11 @@
 
     $nombre=$_POST["nombre"];
     $descripcion=$_POST["descripcion"];
+    $precio=$_POST["precio"];
     $image = $_POST["image"];
     $idUser = $_SESSION["idUser"];
 
-    if($db->query("INSERT INTO products (idUser,nombre,descripcion,`image`) values ('$idUser','$nombre','$descripcion','$image')")){
+    if($db->query("INSERT INTO products (idUser,nombre,descripcion,`image`,precio) values ('$idUser','$nombre','$descripcion','$image','$precio')")){
         echo 1;
     }
 

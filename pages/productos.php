@@ -1,4 +1,4 @@
-<div class="container my-4 mr-0">
+<div class="container">
   <div class="row">
     <div class="col-12 d-flex justify-content-end">
         <button type="button" class="btn btn-primary newProduct">+ Add productos</button>

@@ -12,6 +12,10 @@
 ?>
 <div style="height:53px;">
     <nav class="navbar fixed-top navbar-light bg-light d-flex justify-content-end">
+        <div class="mr-2 pages" id="carritoPages" style="position:relative;cursor:pointer;">
+            <div class="notificationPay" style="display:none;"></div>
+            <i class="fas fa-shopping-cart"></i>
+        </div>
         <img src="http://localhost/proyecto/assets/images/profile.jpeg" style="height:30px;width:30px;margin-right: 10px;" class="rounded-circle">
         <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -23,13 +27,11 @@
         </div>
     </nav>
 </div>
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#" class="pages" id="comprasPage">Compras</a></li>
-    <li class="breadcrumb-item"><a href="#" class="pages" id="ventasPages">Ventas</a></li>
-    <li class="breadcrumb-item"><a href="#" class="pages" style="color:black;" id="productosPages">Tus productos</a></li>
-    <li class="breadcrumb-item"><a href="#" class="pages" id="tiendaPages">Tienda</a></li>
-  </ol>
+<nav class="nav">
+    <a style="color:#007bff;cursor:pointer;" class="nav-link pages" id="comprasPage">Compras</a>
+    <a style="color:#007bff;cursor:pointer;" class="nav-link pages" id="ventasPages">Ventas</a>
+    <a style="color:black;cursor:pointer;" class="nav-link pages" id="productosPages">Tus productos</a>
+    <a style="color:#007bff;cursor:pointer;" class="nav-link pages" id="tiendaPages">Tienda</a>
 </nav>
 <div>
     <div class="productos">
@@ -44,7 +46,20 @@
     <div class="tienda" style="display:none;">
         <?php require_once "tienda.php";?>
     </div>
+    <div class="carrito" style="display:none;">
+        <?php require_once "carrito.php";?>
+    </div>
 </div>
+<style>
+    .notificationPay{
+        width: 5px;
+        background-color: green;
+        height: 5px;
+        border-radius: 133px;
+        position: absolute;
+        right: 0px;
+    }
+</style>
 <script>
     $(document).ready(function(){
         $(".pages").click(function(){
@@ -58,6 +73,8 @@
                     $("#productosPages").css("color","#007bff");
                 $(".tienda").css("display","none");
                     $("#tiendaPages").css("color","#007bff");
+                $(".carrito").css("display","none");
+                    $("#carritoPages").css("color","#007bff");
             }else if(page=="ventasPages"){
                 $(".compra").css("display","none");
                     $("#comprasPage").css("color","#007bff");
@@ -67,6 +84,8 @@
                     $("#productosPages").css("color","#007bff");
                 $(".tienda").css("display","none");
                     $("#tiendaPages").css("color","#007bff");
+                $(".carrito").css("display","none");
+                    $("#carritoPages").css("color","#007bff");
             }else if(page=="productosPages"){
                 $(".compra").css("display","none");
                     $("#comprasPage").css("color","#007bff");                        
@@ -76,6 +95,8 @@
                     $("#productosPages").css("color","black");               
                 $(".tienda").css("display","none");
                     $("#tiendaPages").css("color","#007bff");
+                $(".carrito").css("display","none");
+                    $("#carritoPages").css("color","#007bff");
             }else if(page=="tiendaPages"){
                 $(".compra").css("display","none");
                     $("#comprasPage").css("color","#007bff");                        
@@ -85,6 +106,19 @@
                     $("#productosPages").css("color","#007bff");
                 $(".tienda").css("display","block");
                     $("#tiendaPages").css("color","black");
+                $(".carrito").css("display","none");
+                    $("#carritoPages").css("color","#007bff");
+            }else if(page=="carritoPages"){
+                $(".compra").css("display","none");
+                    $("#comprasPage").css("color","#007bff");                        
+                $(".venta").css("display","none");
+                    $("#ventasPages").css("color","#007bff");                        
+                $(".productos").css("display","none");
+                    $("#productosPages").css("color","#007bff");
+                $(".tienda").css("display","none");
+                    $("#tiendaPages").css("color","#007bff");
+                $(".carrito").css("display","block");
+                    $("#carritoPages").css("color","black");   
             }
         });
         $(".logOut").click(function(){
