@@ -41,6 +41,7 @@ $(document).ready(function(){
             },
             success:function(res){
                 if (res==1) {
+                    cartInfo();
                     Swal.fire({
                         position: 'top-end',
                         icon: 'success',

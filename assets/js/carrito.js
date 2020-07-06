@@ -2,7 +2,11 @@ $(document).ready(function(){
     var idProducts=[];
     var idcarts=[];
     cartInfo();
+    getCompras();
+    getVentas();
     function cartInfo(){
+        idProducts=[];
+        idcarts=[];
         $(".bodyCarrito").empty();
         $.ajax({
             type:"get",
@@ -34,6 +38,62 @@ $(document).ready(function(){
             }
         });
     }
+    function getCompras(){
+        $(".productsCompra").empty();
+        $.ajax({
+            type:"get",
+            url:"http://localhost/proyecto/scripts/getCompras.php",
+            success:function(res){
+                var products = JSON.parse(res);
+                products.forEach(element => {
+                    var image = new Image();                
+                    image.src = element["image"]
+                    $(".productsCompra").append(
+                        "<div class='col-4'>"+
+                            "<img class='imgproducts' src='"+element["image"]+"' />"+
+                            "<div class='d-flex justify-content-center'>"+
+                                "<h5>"+element["nombre"]+"</h5>"+
+                            "</div>"+
+                            "<div class='d-flex justify-content-center'>"+
+                                "<h6>"+element["descripcion"]+"</h6>"+
+                            "</div>"+
+                            "<div class='d-flex justify-content-center'>"+
+                                "<h6>Precio: $"+element["precio"]+"</h6>"+
+                            "</div>"+
+                        "</div>"
+                    );
+                });
+            }
+        });
+    }
+    function getVentas(){
+        $(".productsVenta").empty();
+        $.ajax({
+            type:"get",
+            url:"http://localhost/proyecto/scripts/getVentas.php",
+            success:function(res){
+                var products = JSON.parse(res);
+                products.forEach(element => {
+                    var image = new Image();                
+                    image.src = element["image"]
+                    $(".productsVenta").append(
+                        "<div class='col-4'>"+
+                            "<img class='imgproducts' src='"+element["image"]+"' />"+
+                            "<div class='d-flex justify-content-center'>"+
+                                "<h5>"+element["nombre"]+"</h5>"+
+                            "</div>"+
+                            "<div class='d-flex justify-content-center'>"+
+                                "<h6>"+element["descripcion"]+"</h6>"+
+                            "</div>"+
+                            "<div class='d-flex justify-content-center'>"+
+                                "<h6>Precio: $"+element["precio"]+"</h6>"+
+                            "</div>"+
+                        "</div>"
+                    );
+                });
+            }
+        });
+    }
     $(document).on("click",".removecart",function(){
         var id = $(this).attr("id");
         $.ajax({
@@ -59,6 +119,7 @@ $(document).ready(function(){
             },
             success:function(res){
                 cartInfo();
+                getCompras();
             }
         });
     });
