@@ -7,23 +7,27 @@ $(document).ready(function(){
             url:"http://localhost/proyecto/scripts/productosGet.php",
             success:function(res){
                 var products = JSON.parse(res);
-                products.forEach(element => {
-                    var image = new Image();                
-                    image.src = element["image"]
-                    $(".listProducts").append(
-                        "<div class='col-4'>"+
-                            "<div style='position:absolute;right:0px;' class='pr-5 pt-4'>"+
-                            "<div class='removeProduct' id='"+element["idproducts"]+"'><i style='color:red;' class='fas fa-trash'></i></div></div>"+
-                            "<img class='imgproducts' src='"+element["image"]+"' />"+
-                            "<div class='d-flex justify-content-center'>"+
-                                "<h5>"+element["nombre"]+"</h5>"+
-                            "</div>"+
-                            "<div class='d-flex justify-content-center'>"+
-                                "<h6>"+element["descripcion"]+"</h6>"+
-                            "</div>"+
-                        "</div>"
-                    );
-                });
+                if(products==0){
+                    $(".listProducts").append("<h4>No hay productos aun</h4>");
+                }else{
+                    products.forEach(element => {
+                        var image = new Image();                
+                        image.src = element["image"]
+                        $(".listProducts").append(
+                            "<div class='col-4'>"+
+                                "<div style='position:absolute;right:0px;' class='pr-5 pt-4'>"+
+                                "<div class='removeProduct' id='"+element["idproducts"]+"'><i style='color:red;' class='fas fa-trash'></i></div></div>"+
+                                "<img class='imgproducts' src='"+element["image"]+"' />"+
+                                "<div class='d-flex justify-content-center'>"+
+                                    "<h5>"+element["nombre"]+"</h5>"+
+                                "</div>"+
+                                "<div class='d-flex justify-content-center'>"+
+                                    "<h6>"+element["descripcion"]+"</h6>"+
+                                "</div>"+
+                            "</div>"
+                        );
+                    });
+                }
             }
         });
     }
@@ -61,6 +65,19 @@ $(document).ready(function(){
             '<p><img id="output" width="200" /></p>'+
             '</div>',
             showCancelButton:true,
+            preConfirm: function() {
+                var nombre = $(".nombreProduct").val();
+                var descripcion = $(".descripcionProduct").val();
+                var precio = $(".precioProduct").val();
+                var myFile = $('#file').prop('files')[0];
+                if(nombre.length!=0 && descripcion.length!=0 && precio.length!=0 && myFile!=undefined){
+                    return true;
+                }else{
+                    Swal.showValidationMessage(
+                        `Llene todo los recuadros`
+                      )
+                }
+            },
             cancelButtonText: "Cerrar",
             confirmButtonText: "Confirmar", 
         }).then(async function(confirm){

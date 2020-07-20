@@ -8,26 +8,30 @@ $(document).ready(function(){
             url:"http://localhost/proyecto/scripts/getallProducts.php",
             success:function(res){
                 var products = JSON.parse(res);
-                products.forEach(element => {
-                    var image = new Image();                
-                    image.src = element["image"]
-                    $(".listProductsTienda").append(
-                        "<div class='col-4'>"+
-                            "<img class='imgproducts' src='"+element["image"]+"' />"+
-                            "<div class='d-flex justify-content-center'>"+
-                                "<h5>"+element["nombre"]+"</h5>"+
-                            "</div>"+
-                            "<div class='d-flex justify-content-center'>"+
-                                "<h6>"+element["descripcion"]+"</h6>"+
-                            "</div>"+
-                            "<div>"+
-                            "</div>"+
-                            "<div>"+
-                            "<button type='button' style='width: 100%;' class='btn btn-success buyThis' id='"+element["idproducts"]+"'>Comprar</button>"+
-                            "</div>"+
-                        "</div>"
-                    );
-                });
+                if(products==0){
+                    $(".listProductsTienda").append("<h4>No hay productos aun</h4>");
+                }else{
+                    products.forEach(element => {
+                        var image = new Image();                
+                        image.src = element["image"]
+                        $(".listProductsTienda").append(
+                            "<div class='col-4'>"+
+                                "<img class='imgproducts' src='"+element["image"]+"' />"+
+                                "<div class='d-flex justify-content-center'>"+
+                                    "<h5>"+element["nombre"]+"</h5>"+
+                                "</div>"+
+                                "<div class='d-flex justify-content-center'>"+
+                                    "<h6>"+element["descripcion"]+"</h6>"+
+                                "</div>"+
+                                "<div>"+
+                                "</div>"+
+                                "<div>"+
+                                "<button type='button' style='width: 100%;' class='btn btn-success buyThis' id='"+element["idproducts"]+"'>Comprar</button>"+
+                                "</div>"+
+                            "</div>"
+                        );
+                    });
+                }
             }
         });
     }

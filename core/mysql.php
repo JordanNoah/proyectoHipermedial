@@ -3,7 +3,7 @@ class Db {
     protected static $connection;
     public function connect() {
         if(!isset(self::$connection)) {
-            self::$connection = new mysqli('localhost',"root","1234","proyecto");
+            self::$connection = new mysqli('localhost',"root","2352169","proyecto");
             mysqli_query(self::$connection,"SET NAMES 'utf8'");
         }
         if(self::$connection === false) {

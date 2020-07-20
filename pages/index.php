@@ -1,7 +1,6 @@
 <?php
     include "../includes/header.php";
     session_start();
-    echo !isset($_SESSION["idUser"]);
     if(!isset($_SESSION["idUser"])){
         echo '<script>window.location.href = "http://localhost/proyecto/pages/login.php";</script>';
     }else{
@@ -9,6 +8,9 @@
         $db = new Db();
         $idUser = $_SESSION["idUser"];
         $user = $db->select("SELECT * FROM usuarios where id = $idUser");
+        if(count($user)==0){
+            echo '<script>window.location.href = "http://localhost/proyecto/pages/login.php";</script>';
+        }
 ?>
 <div style="height:53px;">
     <nav class="navbar fixed-top navbar-light bg-light d-flex justify-content-end">
